@@ -6,9 +6,6 @@
 /////
 
 // These are out of 127
-const int DRIVE_SPEED = 110;
-const int TURN_SPEED = 90;
-const int SWING_SPEED = 110;
 
 ///
 // Constants
@@ -377,7 +374,7 @@ void measure_offsets() {
 // Make your own autonomous functions here!
 // . . .
 
-void linetracking(){
+/*void linetracking(){
   while(true){
     if((leftColor.get_hue() == colorRed) || (rightColor.get_hue() == colorRed)){
       chassis.pid_drive_set(0, 0);
@@ -386,7 +383,7 @@ void linetracking(){
       pros::delay(200);
     }
     else if((leftColor.get_hue() == colorGreen) || (rightColor.get_hue() == colorGreen)){
-      chassis.pid_drive_set(0, 0);();
+      chassis.pid_drive_set(0, 0);
       //setLEDColor(ledGreen);
       pros::delay(500);
       if((leftColor.get_hue() == colorGreen) && (rightColor.get_hue() == colorGreen)){
@@ -428,13 +425,13 @@ void linetracking(){
       chassis.pid_drive_set(0, 0);
       pros::delay(1000);
       if((leftColor.get_hue() == colorBlack) && (rightColor.get_hue() == colorBlack)){
-        findLine(true);
+        //findLine(true);
       }
       else if((leftColor.get_hue() == colorBlack) && (rightColor.get_hue() != colorBlack)){
         //leftNudge();
         chassis.pid_drive_set(0.5_cm, DRIVE_SPEED, true);
         while((leftColor.get_hue() != colorWhite) && (rightColor.get_hue() == colorWhite)){
-          findLeft();
+          //findLeft();
         }
         chassis.pid_drive_set(0, 0);
       }
@@ -443,22 +440,110 @@ void linetracking(){
         //rightNudge();
         chassis.pid_drive_set(0.5_cm, DRIVE_SPEED, true);
         while((leftColor.get_hue() == colorWhite) && (rightColor.get_hue() != colorWhite)){
-          findRight();
+          //findRight();
         }
         chassis.pid_drive_set(0, 0);
       }
     }
 
     else if((leftColor.get_hue() == colorWhite) && (rightColor.get_hue() == colorWhite)){
-      setLEDColor(ledGreenPulse);
-      bool wall = checkObstacle();
-      if(wall == false) chassis.pid_drive_set(0, DRIVE_SPEED, true);
+      //setLEDColor(ledGreenPulse);
+      //bool wall = checkObstacle();
+      //if(wall == false) chassis.pid_drive_set(0, DRIVE_SPEED, true);
 
-      else avoidObstacle();
+      //else avoidObstacle();
     }
     else{
       //playSound(soundException); //Means color sensor tripping out
       //setLEDColor(ledRed);
     }
   }
+}*/
+
+void linetracking() {
+  leftColor.set_led_pwm(100);
+  rightColor.set_led_pwm(100);
+    while (true) {
+        int leftHue = leftColor.get_hue();
+        int rightHue = rightColor.get_hue();
+
+        if (colorRed == leftHue || colorRed == rightHue) {
+            chassis.pid_drive_set(0, 0);
+            // playSound(soundBeepBeep);
+            // setLEDColor(ledRedPulse);
+            pros::delay(200);
+        }
+        else if (colorGreen == leftHue || colorGreen == rightHue) {
+            chassis.pid_drive_set(0, 0);
+            // setLEDColor(ledGreen);
+            pros::delay(500);
+            if (colorGreen == leftHue && colorGreen == rightHue) {
+                uTurn();
+                pros::delay(200);
+                chassis.pid_drive_set(1_cm, DRIVE_SPEED, true);
+                pros::delay(200);
+            }
+            else if (colorGreen == leftHue) {
+                if (colorBlack == rightHue) {
+                    leftNudge();
+                    pros::delay(200);
+                    if (colorGreen == leftHue || colorGreen == rightHue) {
+                        return;
+                    }
+                }
+                else {
+                    leftPointTurn();
+                    pros::delay(200);
+                }
+            }
+            else if (colorGreen == rightHue) {
+                if (colorBlack == leftHue) {
+                    rightNudge();
+                    pros::delay(200);
+                    if (colorGreen == leftHue || colorGreen == rightHue) {
+                        pros::delay(200);
+                        return;
+                    }
+                }
+                else {
+                    rightPointTurn();
+                    pros::delay(200);
+                }
+            }
+        }
+        else if (colorBlack == leftHue || colorBlack == rightHue) {
+            chassis.pid_drive_set(0, 0);
+            pros::delay(1000);
+            if (colorBlack == leftHue && colorBlack == rightHue) {
+                // findLine(true);
+            }
+            else if (colorBlack == leftHue && colorBlack != rightHue) {
+                // leftNudge();
+                chassis.pid_drive_set(0.5_cm, DRIVE_SPEED, true);
+                while (colorWhite != leftHue && colorWhite == rightHue) {
+                    // findLeft();
+                }
+                chassis.pid_drive_set(0, 0);
+            }
+            else if (colorBlack != leftHue && colorBlack == rightHue) {
+                // rightNudge();
+                chassis.pid_drive_set(0.5_cm, DRIVE_SPEED, true);
+                while (colorWhite == leftHue && colorWhite != rightHue) {
+                    // findRight();
+                }
+                chassis.pid_drive_set(0, 0);
+            }
+        }
+        else if (colorWhite == leftHue && colorWhite == rightHue) {
+            // setLEDColor(ledGreenPulse);
+            // bool wall = checkObstacle();
+            // if (wall == false) chassis.pid_drive_set(0, DRIVE_SPEED, true);
+            chassis.pid_drive_set(0, DRIVE_SPEED, true);
+            // else avoidObstacle();
+        }
+        else {
+            // playSound(soundException); // Means color sensor tripping out
+            // setLEDColor(ledRed);
+        }
+    }
 }
