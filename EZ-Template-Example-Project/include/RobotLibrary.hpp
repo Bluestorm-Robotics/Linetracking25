@@ -9,8 +9,6 @@ inline const int SWING_SPEED = 110;
 //inline const int lineWidthCM = 2_cm;
 
 
-extern Drive chassis;
-
 //int m = 1; //Motor Vector (obsolete)
 /*int uTurnValue = 500;
 int vpointTurn = 200; //point turn value

@@ -461,11 +461,13 @@ void measure_offsets() {
 }*/
 
 void linetracking() {
-  leftColor.set_led_pwm(100);
-  rightColor.set_led_pwm(100);
+  leftColor.set_led_pwm(0);
+  rightColor.set_led_pwm(0);
     while (true) {
-        int leftHue = leftColor.get_hue();
-        int rightHue = rightColor.get_hue();
+        //int leftHue = leftColor.get_hue();
+        //int rightHue = rightColor.get_hue();
+        int leftHue = false;
+        int rightHue = false;
 
         if (colorRed == leftHue || colorRed == rightHue) {
             chassis.pid_drive_set(0, 0);
@@ -484,7 +486,7 @@ void linetracking() {
                 pros::delay(200);
             }
             else if (colorGreen == leftHue) {
-                if (colorBlack == rightHue) {
+                if (rightLine.get_value()) {
                     leftNudge();
                     pros::delay(200);
                     if (colorGreen == leftHue || colorGreen == rightHue) {
@@ -497,7 +499,7 @@ void linetracking() {
                 }
             }
             else if (colorGreen == rightHue) {
-                if (colorBlack == leftHue) {
+                if (leftLine.get_value()) {
                     rightNudge();
                     pros::delay(200);
                     if (colorGreen == leftHue || colorGreen == rightHue) {
@@ -511,30 +513,30 @@ void linetracking() {
                 }
             }
         }
-        else if (colorBlack == leftHue || colorBlack == rightHue) {
+        else if ((leftLine.get_value()) || (rightLine.get_value())) {
             chassis.pid_drive_set(0, 0);
             pros::delay(1000);
-            if (colorBlack == leftHue && colorBlack == rightHue) {
+            if ((leftLine.get_value() && rightLine.get_value())) {
                 // findLine(true);
             }
-            else if (colorBlack == leftHue && colorBlack != rightHue) {
+            else if (leftLine.get_value() && !rightLine.get_value()) {
                 // leftNudge();
                 chassis.pid_drive_set(0.5_cm, DRIVE_SPEED, true);
-                while (colorWhite != leftHue && colorWhite == rightHue) {
+                while (!leftLine.get_value() && rightLine.get_value()) {
                     // findLeft();
                 }
                 chassis.pid_drive_set(0, 0);
             }
-            else if (colorBlack != leftHue && colorBlack == rightHue) {
+            else if (!leftLine.get_value() && rightLine.get_value()) {
                 // rightNudge();
                 chassis.pid_drive_set(0.5_cm, DRIVE_SPEED, true);
-                while (colorWhite == leftHue && colorWhite != rightHue) {
+                while (!leftLine.get_value() && rightLine.get_value()) {
                     // findRight();
                 }
                 chassis.pid_drive_set(0, 0);
             }
         }
-        else if (colorWhite == leftHue && colorWhite == rightHue) {
+        else if (!leftLine.get_value() && !rightLine.get_value()) {
             // setLEDColor(ledGreenPulse);
             // bool wall = checkObstacle();
             // if (wall == false) chassis.pid_drive_set(0, DRIVE_SPEED, true);
