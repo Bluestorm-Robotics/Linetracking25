@@ -526,7 +526,7 @@ void linetracking() {
                     // findLeft();
                 }
                 chassis.pid_drive_set(0, 0);
-            }
+            } 
             else if (!leftLine.get_value() && rightLine.get_value()) {
                 // rightNudge();
                 chassis.pid_drive_set(0.5_cm, DRIVE_SPEED, true);
