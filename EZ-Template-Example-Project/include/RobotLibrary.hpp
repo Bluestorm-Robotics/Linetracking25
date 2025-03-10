@@ -3,9 +3,9 @@
 #include "EZ-Template/api.hpp"
 #include "api.h"
 
-inline const int DRIVE_SPEED = 110;
-inline const int TURN_SPEED = 90;
-inline const int SWING_SPEED = 110;
+inline const int DRIVE_SPEED = 15;
+inline const int TURN_SPEED = 15; //not really used
+inline const int SWING_SPEED = 15;
 //inline const int lineWidthCM = 2_cm;
 
 
@@ -20,7 +20,7 @@ float robotDiameterCM = 22.0;
 int WallDistCM = 8;
 float searchTime = 2;
 */
-
+ 
 //throw functions below
 /*void rsMotors(){
 	resetMotorEncoder(motorB);

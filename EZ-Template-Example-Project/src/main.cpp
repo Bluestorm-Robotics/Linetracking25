@@ -8,12 +8,12 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-1, -2, },     // Left Chassis Ports (negative port will reverse it!)
-    {11, 12},  // Right Chassis Ports (negative port will reverse it!)
+    {-13, -14},     // Left Chassis Ports (negative port will reverse it!)
+    {12, 15},  // Right Chassis Ports (negative port will reverse it!)
 
-    7,      // IMU Port
+    11,      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
-    200);   // Wheel RPM = cartridge * (motor gear / wheel gear)
+    600);   // Wheel RPM = cartridge * (motor gear / wheel gear)
 
 // Uncomment the trackers you're using here!
 // - `8` and `9` are smart ports (making these negative will reverse the sensor)
@@ -161,8 +161,11 @@ void ez_screen_task() {
           screen_print_tracker(chassis.odom_tracker_back, "b", 6);
           screen_print_tracker(chassis.odom_tracker_front, "f", 7);
         }
-        if(ez::as::page_blank_is_on(1)){
+        if(ez::as::page_blank_is_on(2)){
           ez::screen_print("LCS: " + std::to_string(leftColor.get_hue()) + "\n RCS: " + std::to_string(rightColor.get_hue()));
+        }
+        if(ez::as::page_blank_is_on(1)){
+          ez::screen_print("LCS: " + std::to_string(leftLine.get_value()) + "\n RCS: " + std::to_string(rightLine.get_value()));
         }
       }
     }

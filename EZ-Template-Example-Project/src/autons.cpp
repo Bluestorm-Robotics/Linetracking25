@@ -460,7 +460,7 @@ void measure_offsets() {
   }
 }*/
 
-void linetracking() {
+/*void linetracking() {
   leftColor.set_led_pwm(0);
   rightColor.set_led_pwm(0);
     while (true) {
@@ -548,4 +548,36 @@ void linetracking() {
             // setLEDColor(ledRed);
         }
     }
+}*/
+void linetracking(){
+  while(true){
+    if((leftLine.get_value()) && (rightLine.get_value())){
+      //chassis.pid_targets_reset();
+      chassis.drive_set(DRIVE_SPEED, DRIVE_SPEED);
+      pros::delay(200);
+    }
+
+    else if((leftLine.get_value()) && (!rightLine.get_value())){ //true = white
+      /*chassis.pid_drive_set(0, 0);
+      chassis.pid_swing_relative_set(ez::RIGHT_SWING, 5, SWING_SPEED, true);*/
+      chassis.pid_drive_set(SWING_SPEED, 0);
+      pros::delay(200);
+    }
+    else if((!leftLine.get_value()) && (rightLine.get_value())){ 
+      /*chassis.pid_drive_set(0, 0);
+      chassis.pid_swing_relative_set(ez::LEFT_SWING, -5, SWING_SPEED, true);*/
+      chassis.pid_drive_set(0, SWING_SPEED);
+      pros::delay(200);
+    }
+    else if((!leftLine.get_value()) && (!rightLine.get_value())){
+      chassis.pid_targets_reset();
+      chassis.pid_drive_set(0, 0);
+      pros::delay(200);
+    }
+    else{
+      chassis.pid_targets_reset();
+      chassis.pid_drive_set(0, 0);
+      pros::delay(200);
+    }
+  }
 }
