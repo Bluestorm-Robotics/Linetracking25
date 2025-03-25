@@ -59,6 +59,8 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
       {"linetracking\n\nRecompiled ROBOTC ev3 code for VEX", linetracking},
+      {"left Swing test", leftSwing},
+      {"right Swing test", rightSwing},
   });
 
   // Initialize chassis and auton selector

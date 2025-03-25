@@ -545,39 +545,47 @@ void measure_offsets() {
         }
         else {
             // playSound(soundException); // Means color sensor tripping out
-            // setLEDColor(ledRed);
+            // set  LEDColor(ledRed);
         }
     }
 }*/
 void linetracking(){
   while(true){
-    if((leftLine.get_value()) && (rightLine.get_value())){
+    if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){ //if both are white
       //chassis.pid_targets_reset();
       chassis.drive_set(DRIVE_SPEED, DRIVE_SPEED);
       pros::delay(200);
     }
 
-    else if((leftLine.get_value()) && (!rightLine.get_value())){ //true = white
+    else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() > colorBlack)){ //if left white right black
       /*chassis.pid_drive_set(0, 0);
       chassis.pid_swing_relative_set(ez::RIGHT_SWING, 5, SWING_SPEED, true);*/
       chassis.pid_drive_set(SWING_SPEED, 0);
       pros::delay(200);
     }
-    else if((!leftLine.get_value()) && (rightLine.get_value())){ 
+    else if((leftLine.get_value() > colorBlack) && (rightLine.get_value() < colorBlack)){ //if left black if right white
       /*chassis.pid_drive_set(0, 0);
       chassis.pid_swing_relative_set(ez::LEFT_SWING, -5, SWING_SPEED, true);*/
       chassis.pid_drive_set(0, SWING_SPEED);
       pros::delay(200);
     }
-    else if((!leftLine.get_value()) && (!rightLine.get_value())){
+    else if((leftLine.get_value() > colorBlack) && (rightLine.get_value() > colorBlack)){ //if both black
       chassis.pid_targets_reset();
       chassis.pid_drive_set(0, 0);
       pros::delay(200);
     }
-    else{
+    /*else{
       chassis.pid_targets_reset();
       chassis.pid_drive_set(0, 0);
       pros::delay(200);
-    }
+    }*/
   }
+}
+void leftSwing(){
+  chassis.pid_drive_set(SWING_SPEED, 0);
+  pros::delay(10000);
+}
+void rightSwing(){
+  chassis.pid_drive_set(0, SWING_SPEED);
+  pros::delay(10000);
 }
