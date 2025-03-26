@@ -571,7 +571,8 @@ void linetracking(){
     }
     else if((leftLine.get_value() > colorBlack) && (rightLine.get_value() > colorBlack)){ //if both black
       chassis.pid_targets_reset();
-      chassis.pid_drive_set(0, 0);
+      chassis.pid_drive_set(0.393701_in, DRIVE_SPEED, true);
+      chassis.pid_wait();
       pros::delay(200);
     }
     /*else{
@@ -582,10 +583,14 @@ void linetracking(){
   }
 }
 void leftSwing(){
-  chassis.pid_drive_set(SWING_SPEED, 0);
-  pros::delay(10000);
+  while(true){
+    chassis.pid_drive_set(0, 127, ez::raw);
+    pros::delay(500);
+  }
 }
 void rightSwing(){
-  chassis.pid_drive_set(0, SWING_SPEED);
-  pros::delay(10000);
+  while(true){
+    chassis.pid_drive_set(127, 0, ez::raw);
+    pros::delay(500);
+  }
 }
