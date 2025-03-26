@@ -3,8 +3,8 @@
 #include "EZ-Template/api.hpp"
 #include "api.h"
 
-inline const int DRIVE_SPEED = 30;
-inline const int TURN_SPEED = 25; //not really used
+inline const int DRIVE_SPEED = 15;
+inline const int TURN_SPEED = 110; //not really used
 inline const int SWING_SPEED = 40;
 
 //inline const int lineWidthCM = 2_cm;

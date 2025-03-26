@@ -558,24 +558,38 @@ void linetracking(){
     }
 
     else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() > colorBlack)){ //if left white right black
-      /*chassis.pid_drive_set(0, 0);
+      chassis.pid_drive_set(0, 0);
+      pros::delay(50);/*
       chassis.pid_swing_relative_set(ez::RIGHT_SWING, 5, SWING_SPEED, true);*/
-      chassis.pid_swing_relative_set(ez::RIGHT_SWING, 1, 110, 30);
+      //chassis.pid_swing_relative_set(ez::RIGHT_SWING, 5, 80, 40);
+      /*chassis.pid_drive_set(-19685_in, DRIVE_SPEED, true);
+      chassis.pid_wait();*/
+      chassis.pid_turn_relative_set(5, TURN_SPEED, true); //turn right
+      //chassis.pid_swing_relative_set(ez::LEFT_SWING, 15, 40, -20);
       chassis.pid_wait();
+      /*chassis.pid_drive_set(-19685_in, DRIVE_SPEED, true);
+      chassis.pid_wait();*/
       //chassis.pid_drive_set(SWING_SPEED, 0);
       pros::delay(50);
     }
     else if((leftLine.get_value() > colorBlack) && (rightLine.get_value() < colorBlack)){ //if left black if right white
-      /*chassis.pid_drive_set(0, 0);
+      chassis.pid_drive_set(0, 0);
+      pros::delay(50);
+      /*
       chassis.pid_swing_relative_set(ez::LEFT_SWING, -5, SWING_SPEED, true);*/
-      chassis.pid_swing_relative_set(ez::LEFT_SWING, 1, 110, 30);
+      //chassis.pid_swing_relative_set(ez::LEFT_SWING, -5, 80, 40);
+      /*chassis.pid_drive_set(-19685_in, DRIVE_SPEED, true);
+      chassis.pid_wait();*/
+      //chassis.pid_swing_relative_set(ez::RIGHT_SWING, -15, 40, -20);
+      chassis.pid_turn_relative_set(-5, TURN_SPEED, true); // turn left
       chassis.pid_wait();
+      /*chassis.pid_drive_set(-19685_in, DRIVE_SPEED, true);
+      chassis.pid_wait();*/
       //chassis.pid_drive_set(0, SWING_SPEED);
       pros::delay(50);
     }
     else if((leftLine.get_value() > colorBlack) && (rightLine.get_value() > colorBlack)){ //if both black
-      chassis.pid_targets_reset();
-      chassis.pid_drive_set(0.393701_in, DRIVE_SPEED, true);
+      chassis.pid_drive_set(0.19685_in, DRIVE_SPEED, true);
       chassis.pid_wait();
       pros::delay(50);
     }
@@ -587,13 +601,12 @@ void linetracking(){
   }
 }
 void leftSwing(){
-  while(true){
-    chassis.pid_drive_set(0, 127, false, ez::raw);
-    pros::delay(500);
-  }
+    chassis.pid_swing_relative_set(ez::LEFT_SWING, -1, 110);
+    chassis.pid_wait();
 }
 void rightSwing(){
-
+    chassis.pid_swing_relative_set(ez::RIGHT_SWING, 1, 110);
+    chassis.pid_wait();
   /*while(true){
     chassis.pid_drive_set(127, 0, false);
     pros::delay(500);

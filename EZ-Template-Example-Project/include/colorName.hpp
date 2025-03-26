@@ -47,4 +47,4 @@ inline const ColorRange colorGreen(70, 150); // Example range for green
 inline const ColorRange colorBlack(0, 10);   // Example range for black
 inline const ColorRange colorWhite(240, 255); // Example range for white
 */
-inline const int colorBlack = 1000;
+inline const int colorBlack = 300;
