@@ -554,26 +554,30 @@ void linetracking(){
     if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){ //if both are white
       //chassis.pid_targets_reset();
       chassis.drive_set(DRIVE_SPEED, DRIVE_SPEED);
-      pros::delay(200);
+      pros::delay(50);
     }
 
     else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() > colorBlack)){ //if left white right black
       /*chassis.pid_drive_set(0, 0);
       chassis.pid_swing_relative_set(ez::RIGHT_SWING, 5, SWING_SPEED, true);*/
-      chassis.pid_drive_set(SWING_SPEED, 0);
-      pros::delay(200);
+      chassis.pid_swing_relative_set(ez::RIGHT_SWING, 1, 110, 30);
+      chassis.pid_wait();
+      //chassis.pid_drive_set(SWING_SPEED, 0);
+      pros::delay(50);
     }
     else if((leftLine.get_value() > colorBlack) && (rightLine.get_value() < colorBlack)){ //if left black if right white
       /*chassis.pid_drive_set(0, 0);
       chassis.pid_swing_relative_set(ez::LEFT_SWING, -5, SWING_SPEED, true);*/
-      chassis.pid_drive_set(0, SWING_SPEED);
-      pros::delay(200);
+      chassis.pid_swing_relative_set(ez::LEFT_SWING, 1, 110, 30);
+      chassis.pid_wait();
+      //chassis.pid_drive_set(0, SWING_SPEED);
+      pros::delay(50);
     }
     else if((leftLine.get_value() > colorBlack) && (rightLine.get_value() > colorBlack)){ //if both black
       chassis.pid_targets_reset();
       chassis.pid_drive_set(0.393701_in, DRIVE_SPEED, true);
       chassis.pid_wait();
-      pros::delay(200);
+      pros::delay(50);
     }
     /*else{
       chassis.pid_targets_reset();
@@ -584,13 +588,14 @@ void linetracking(){
 }
 void leftSwing(){
   while(true){
-    chassis.pid_drive_set(0, 127, ez::raw);
+    chassis.pid_drive_set(0, 127, false, ez::raw);
     pros::delay(500);
   }
 }
 void rightSwing(){
-  while(true){
-    chassis.pid_drive_set(127, 0, ez::raw);
+
+  /*while(true){
+    chassis.pid_drive_set(127, 0, false);
     pros::delay(500);
-  }
+  }*/
 }
