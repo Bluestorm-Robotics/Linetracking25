@@ -12,7 +12,7 @@ ez::Drive chassis(
     {12, 15},  // Right Chassis Ports (negative port will reverse it!)
 
     11,      // IMU Port
-    3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
+    4,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     100);   // Wheel RPM = cartridge * (motor gear / wheel gear)
 
 // Uncomment the trackers you're using here!
@@ -67,6 +67,8 @@ void initialize() {
   chassis.initialize();
   ez::as::initialize();
   master.rumble(chassis.drive_imu_calibrated() ? "." : "---");
+  leftColor.set_led_pwm(100);
+  rightColor.set_led_pwm(100);
 }
 
 /**

@@ -551,7 +551,28 @@ void measure_offsets() {
 }*/
 void linetracking(){
   while(true){
-    if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){ //if both are white
+
+    if(leftColor.get_hue() == colorGreen || rightColor.get_hue() == colorGreen){
+      chassis.pid_drive_set(0, 0); //stop
+      pros::delay(50);
+      if(leftColor.get_hue() == colorGreen && leftColor.get_hue() == colorGreen){
+        printf("Uturn\n");
+      }
+      else if(leftColor.get_hue() == colorGreen && rightColor.get_hue() != colorGreen){
+        //turn left
+        printf("Left turn!!!\n");
+        leftPointTurn();
+      }
+      else if((leftColor.get_hue() != colorGreen && rightColor.get_hue() == colorGreen)){
+        printf("right turn!!!\n");
+        rightPointTurn();
+      }
+      else{
+        printf("Green disapeared\n");
+      }
+    }
+
+    else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){ //if both are white
       //chassis.pid_targets_reset();
       chassis.drive_set(DRIVE_SPEED, DRIVE_SPEED);
       pros::delay(50);
@@ -589,7 +610,7 @@ void linetracking(){
       pros::delay(50);
     }
     else if((leftLine.get_value() > colorBlack) && (rightLine.get_value() > colorBlack)){ //if both black
-      chassis.pid_drive_set(0.19685_in, DRIVE_SPEED, true);
+      chassis.pid_drive_set(0.787402_in, DRIVE_SPEED, true);
       chassis.pid_wait();
       pros::delay(50);
     }

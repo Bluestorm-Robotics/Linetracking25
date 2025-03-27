@@ -3,7 +3,7 @@
 #include "EZ-Template/api.hpp"
 #include "api.h"
 
-inline const int DRIVE_SPEED = 15;
+inline const int DRIVE_SPEED = 30;
 inline const int TURN_SPEED = 110; //not really used
 inline const int SWING_SPEED = 40;
 
@@ -66,16 +66,16 @@ void moveCM(float y){ //move given distance in CM
 }
 */
 inline void leftPointTurn(){
-    chassis.pid_drive_set(2, DRIVE_SPEED, true);
+    chassis.pid_drive_set(4_cm, DRIVE_SPEED, true);
     chassis.pid_wait();
-    chassis.pid_turn_relative_set(90_deg, TURN_SPEED, true);
+    chassis.pid_turn_relative_set(-90_deg, TURN_SPEED, true);
     chassis.pid_wait();
     chassis.pid_drive_set(2_cm, DRIVE_SPEED, true);
     chassis.pid_wait();
 }
 
 inline void rightPointTurn(){
-    chassis.pid_drive_set(2, DRIVE_SPEED, true);
+    chassis.pid_drive_set(4_cm, DRIVE_SPEED, true);
     chassis.pid_wait();
     chassis.pid_turn_relative_set(90_deg, TURN_SPEED, true);
     chassis.pid_wait();

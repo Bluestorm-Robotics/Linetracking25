@@ -21,7 +21,7 @@ inline const int colorWhite;
 */
 
 
-/*class ColorRange {
+class ColorRange {
     public:
         ColorRange(int min, int max) : min_(min), max_(max) {}
 
@@ -43,8 +43,7 @@ inline const int colorWhite;
 // Define color ranges
 
 inline const ColorRange colorRed(0, 30);   // Example range for red
-inline const ColorRange colorGreen(70, 150); // Example range for green
-inline const ColorRange colorBlack(0, 10);   // Example range for black
-inline const ColorRange colorWhite(240, 255); // Example range for white
-*/
-inline const int colorBlack = 300;
+inline const ColorRange colorGreen(60, 200); // Example range for green
+//inline const ColorRange colorBlack(0, 10);   // Example range for black
+//inline const ColorRange colorWhite(240, 255); // Example range for white
+inline const int colorBlack = 2000; //bro what somehow the sensor reads a dif range between days
