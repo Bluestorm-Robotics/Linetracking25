@@ -7,6 +7,7 @@ inline const int DRIVE_SPEED = 30;
 inline const int TURN_SPEED = 110; //not really used
 inline const int SWING_SPEED = 40;
 
+inline const int detectionDistance  = 150; //Obstacle detection distance for ultrasonic sensor
 //inline const int lineWidthCM = 2_cm;
 
 
@@ -65,12 +66,17 @@ void moveCM(float y){ //move given distance in CM
 	waitUntilMotorStop(motorC);
 }
 */
+
+inline void STP(){ //stop
+	chassis.pid_drive_set(0, 0);
+}
+
 inline void leftPointTurn(){
     chassis.pid_drive_set(4_cm, DRIVE_SPEED, true);
     chassis.pid_wait();
     chassis.pid_turn_relative_set(-90_deg, TURN_SPEED, true);
     chassis.pid_wait();
-    chassis.pid_drive_set(2_cm, DRIVE_SPEED, true);
+    chassis.pid_drive_set(10_cm, DRIVE_SPEED, true);
     chassis.pid_wait();
 }
 
@@ -79,7 +85,7 @@ inline void rightPointTurn(){
     chassis.pid_wait();
     chassis.pid_turn_relative_set(90_deg, TURN_SPEED, true);
     chassis.pid_wait();
-    chassis.pid_drive_set(2_cm, DRIVE_SPEED, true);
+    chassis.pid_drive_set(10_cm, DRIVE_SPEED, true);
     chassis.pid_wait();
 }
 
@@ -103,6 +109,13 @@ inline void rightNudge(){
     chassis.pid_turn_relative_set(5_deg, TURN_SPEED, true);
     chassis.pid_wait();
 }
+
+inline bool checkObstacle(){ //Checks front ultrasonic sensor for obstacles
+	if(ultrasonic.get_distance() > detectionDistance) return true;
+
+	else return true;
+}
+
 
 /*void leftNudge(){ old code
 	STP();

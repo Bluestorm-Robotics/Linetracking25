@@ -551,9 +551,12 @@ void measure_offsets() {
 }*/
 void linetracking(){
   while(true){
-
-    if(leftColor.get_hue() == colorGreen || rightColor.get_hue() == colorGreen){
-      chassis.pid_drive_set(0, 0); //stop
+    if(checkObstacle){
+      STP();
+    }
+    
+    else if(leftColor.get_hue() == colorGreen || rightColor.get_hue() == colorGreen){
+      STP();
       pros::delay(50);
       if(leftColor.get_hue() == colorGreen && leftColor.get_hue() == colorGreen){
         printf("Uturn\n");
@@ -579,7 +582,7 @@ void linetracking(){
     }
 
     else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() > colorBlack)){ //if left white right black
-      chassis.pid_drive_set(0, 0);
+      STP();
       pros::delay(50);/*
       chassis.pid_swing_relative_set(ez::RIGHT_SWING, 5, SWING_SPEED, true);*/
       //chassis.pid_swing_relative_set(ez::RIGHT_SWING, 5, 80, 40);
@@ -594,7 +597,7 @@ void linetracking(){
       pros::delay(50);
     }
     else if((leftLine.get_value() > colorBlack) && (rightLine.get_value() < colorBlack)){ //if left black if right white
-      chassis.pid_drive_set(0, 0);
+      STP();
       pros::delay(50);
       /*
       chassis.pid_swing_relative_set(ez::LEFT_SWING, -5, SWING_SPEED, true);*/

@@ -165,11 +165,14 @@ void ez_screen_task() {
           screen_print_tracker(chassis.odom_tracker_back, "b", 6);
           screen_print_tracker(chassis.odom_tracker_front, "f", 7);
         }
-        if(ez::as::page_blank_is_on(2)){
-          ez::screen_print("LCS: " + std::to_string(leftColor.get_hue()) + "\n RCS: " + std::to_string(rightColor.get_hue()));
-        }
         if(ez::as::page_blank_is_on(1)){
-          ez::screen_print("LCS: " + std::to_string(leftLine.get_value()) + "\n RCS: " + std::to_string(rightLine.get_value()));
+          ez::screen_print(
+            "LIRS: " + std::to_string(leftLine.get_value()) + 
+            "\n RIRS: " + std::to_string(rightLine.get_value()) +
+            "LCS: " + std::to_string(leftColor.get_hue()) + 
+            "\n RCS: " + std::to_string(rightColor.get_hue()) + 
+            "\n RNG: " + std::to_string(ultrasonic.get_distance())
+        );
         }
       }
     }
