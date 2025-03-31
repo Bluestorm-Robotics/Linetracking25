@@ -551,11 +551,11 @@ void measure_offsets() {
 }*/
 void linetracking(){
   while(true){
-    if(checkObstacle){
+    /*if(checkObstacle){
       STP();
-    }
-    
-    else if(leftColor.get_hue() == colorGreen || rightColor.get_hue() == colorGreen){
+    }*/
+
+     if(leftColor.get_hue() == colorGreen || rightColor.get_hue() == colorGreen){
       STP();
       pros::delay(50);
       if(leftColor.get_hue() == colorGreen && leftColor.get_hue() == colorGreen){

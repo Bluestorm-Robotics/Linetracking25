@@ -3,11 +3,15 @@
 #include "EZ-Template/api.hpp"
 #include "api.h"
 
-inline const int DRIVE_SPEED = 30;
+inline const int norm_DRIVE_SPEED = 30; //Default driving speed
+inline const int upHill_DRIVE_SPEED = 110; //uphill driving speed
 inline const int TURN_SPEED = 110; //not really used
 inline const int SWING_SPEED = 40;
 
+inline int DRIVE_SPEED = 30; //Editable variable
+
 inline const int detectionDistance  = 150; //Obstacle detection distance for ultrasonic sensor
+inline const int tiltFlag = 10;
 //inline const int lineWidthCM = 2_cm;
 
 
@@ -111,9 +115,32 @@ inline void rightNudge(){
 }
 
 inline bool checkObstacle(){ //Checks front ultrasonic sensor for obstacles
-	if(ultrasonic.get_distance() > detectionDistance) return true;
+	if(ultrasonic.get_distance() < detectionDistance) return true;
 
-	else return true;
+	else return false;
+}
+
+inline void tiltMonitor(){
+	pros::delay(50);
+	while(true){
+		if(chassis.imu.get_pitch() > tiltFlag){
+			DRIVE_SPEED = upHill_DRIVE_SPEED;
+		}
+		else DRIVE_SPEED = norm_DRIVE_SPEED;
+
+		pros::delay(50);
+	}
+}
+
+inline void resetSwitch(){
+	while(true){
+		if(resetBut.get_value() == false){
+			chassis.pid_targets_reset();                // Resets PID targets to 0
+			chassis.drive_imu_reset();                  // Reset gyro position to 0
+			chassis.drive_sensor_reset(); 
+		}
+		pros::delay(500);
+	}
 }
 
 

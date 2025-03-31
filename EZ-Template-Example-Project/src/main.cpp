@@ -69,6 +69,8 @@ void initialize() {
   master.rumble(chassis.drive_imu_calibrated() ? "." : "---");
   leftColor.set_led_pwm(100);
   rightColor.set_led_pwm(100);
+  pros::Task TiltMonitor(tiltMonitor);
+  pros::Task Reset(resetSwitch);
 }
 
 /**
@@ -171,8 +173,13 @@ void ez_screen_task() {
             "\n RIRS: " + std::to_string(rightLine.get_value()) +
             "LCS: " + std::to_string(leftColor.get_hue()) + 
             "\n RCS: " + std::to_string(rightColor.get_hue()) + 
-            "\n RNG: " + std::to_string(ultrasonic.get_distance())
+            "\n RNG: " + std::to_string(ultrasonic.get_distance()) + 
+            "\n CheckOB " + std::to_string(checkObstacle())
         );
+        }
+        if(ez::as::page_blank_is_on(2)){
+          ez::screen_print(
+          "IMU: " + std::to_string(chassis.imu.get_pitch()));
         }
       }
     }
