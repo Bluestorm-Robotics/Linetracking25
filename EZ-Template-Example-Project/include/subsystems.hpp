@@ -10,7 +10,7 @@ extern Drive chassis;
 //Linetracking sensors (23mm spacing)
 inline pros::adi::AnalogIn leftLine('A');
 inline pros::adi::AnalogIn rightLine('C');
-inline pros::ADIButton resetBut('D');
+inline pros::adi::DigitalIn resetBut('D');
 
 //Color sensors  (58mm spacing)
 inline pros::Optical leftColor(19);

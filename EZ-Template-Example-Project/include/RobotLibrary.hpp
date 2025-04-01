@@ -96,6 +96,8 @@ inline void rightPointTurn(){
 inline void uTurn(){
     chassis.pid_turn_relative_set(180_deg, TURN_SPEED, true);
     chassis.pid_wait();
+	chassis.pid_drive_set(6_cm, DRIVE_SPEED, true);
+    chassis.pid_wait();
 }
 
 inline void leftNudge(){
@@ -139,8 +141,9 @@ inline void resetSwitch(){
 			chassis.drive_imu_reset();                  // Reset gyro position to 0
 			chassis.drive_sensor_reset();
 			chassis.drive_set(0, 0); 
+			pros::delay(500);
 		}
-		pros::delay(500);
+		pros::delay(50);
 	}
 }
 

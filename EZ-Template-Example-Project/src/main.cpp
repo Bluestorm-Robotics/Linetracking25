@@ -70,7 +70,7 @@ void initialize() {
   leftColor.set_led_pwm(100);
   rightColor.set_led_pwm(100);
   pros::Task TiltMonitor(tiltMonitor);
-  pros::Task Reset(resetSwitch);
+  //pros::Task Reset(resetSwitch);
 }
 
 /**

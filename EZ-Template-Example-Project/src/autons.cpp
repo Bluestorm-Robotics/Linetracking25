@@ -559,7 +559,8 @@ void linetracking(){
       STP();
       pros::delay(50);
       if(leftColor.get_hue() == colorGreen && leftColor.get_hue() == colorGreen){
-        printf("Uturn\n");
+        uTurn();
+        //printf("Uturn\n");
       }
       else if(leftColor.get_hue() == colorGreen && rightColor.get_hue() != colorGreen){
         //turn left
