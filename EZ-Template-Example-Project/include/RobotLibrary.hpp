@@ -137,7 +137,8 @@ inline void resetSwitch(){
 		if(resetBut.get_value() == false){
 			chassis.pid_targets_reset();                // Resets PID targets to 0
 			chassis.drive_imu_reset();                  // Reset gyro position to 0
-			chassis.drive_sensor_reset(); 
+			chassis.drive_sensor_reset();
+			chassis.drive_set(0, 0); 
 		}
 		pros::delay(500);
 	}
