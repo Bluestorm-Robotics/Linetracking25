@@ -4,14 +4,17 @@
 #include "api.h"
 
 inline const int norm_DRIVE_SPEED = 30; //Default driving speed
-inline const int upHill_DRIVE_SPEED = 110; //uphill driving speed
-inline const int TURN_SPEED = 110; //not really used
+inline const int norm_TURN_SPPEED = 110;
+inline const int upHill_DRIVE_SPEED = 127; //uphill driving speed
+inline const int upHill_TURN_SPEED = 127;
+inline const int downHill_DRIVE_SPEED = 15;
 inline const int SWING_SPEED = 40;
 
 inline int DRIVE_SPEED = 30; //Editable variable
+inline int TURN_SPEED = 110; //not really used
 
 inline const int detectionDistance  = 150; //Obstacle detection distance for ultrasonic sensor
-inline const int tiltFlag = 10;
+inline const int tiltFlag = 10; //10 degress downhill
 //inline const int lineWidthCM = 2_cm;
 
 
@@ -125,10 +128,18 @@ inline bool checkObstacle(){ //Checks front ultrasonic sensor for obstacles
 inline void tiltMonitor(){
 	pros::delay(50);
 	while(true){
-		if(chassis.imu.get_pitch() > tiltFlag){
+		if(chassis.imu.get_pitch() < -tiltFlag){
 			DRIVE_SPEED = upHill_DRIVE_SPEED;
+			TURN_SPEED = upHill_TURN_SPEED;
 		}
-		else DRIVE_SPEED = norm_DRIVE_SPEED;
+		else if(chassis.imu.get_pitch() > tiltFlag){
+			DRIVE_SPEED = downHill_DRIVE_SPEED;
+			TURN_SPEED = norm_TURN_SPPEED;
+		}
+		else {
+			DRIVE_SPEED = norm_DRIVE_SPEED;
+			TURN_SPEED = norm_TURN_SPPEED;
+		}
 
 		pros::delay(50);
 	}
