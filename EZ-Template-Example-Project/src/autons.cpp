@@ -612,7 +612,28 @@ void linetracking(){
       }
       else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){ //if both are white
         //chassis.pid_targets_reset();
-        chassis.drive_set(DRIVE_SPEED, DRIVE_SPEED);
+        //chassis.drive_set(DRIVE_SPEED, DRIVE_SPEED);
+
+
+        /*
+
+        Shelly's code for when both see white
+
+        */
+
+        if((leftOuterLine.get_value() > colorBlack) && (rightOuterLine.get_value() < colorBlack)){
+          pros::delay(50);
+          chassis.pid_turn_relative_set(-5, TURN_SPEED, true); // turn left;
+        }
+        else if((leftOuterLine.get_value() < colorBlack) && (rightOuterLine.get_value() > colorBlack)){
+          chassis.pid_turn_relative_set(5, TURN_SPEED, true); // turn left;
+        }
+        else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){
+          chassis.pid_drive_set(0.787402_in, DRIVE_SPEED, true);
+          //HELP: need to only for 1 cm and then resume the checking system
+        }  
+
+
         pros::delay(50);
       }
       else{
@@ -627,10 +648,30 @@ void linetracking(){
       pros::delay(50);
     }
 
-  /*else{
-  chassis.pid_targets_reset();
-  chassis.pid_drive_set(0, 0);
-  pros::delay(200);*/
+    /*outer sensor logic
+
+    else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){   
+      if((leftOuterLine.get_value() > colorBlack) && (rightOuterLine.get_value() < colorBlack)){
+        pros::delay(50);
+        chassis.pid_turn_relative_set(-5, TURN_SPEED, true); // turn left;
+      }
+      else if((leftOuterLine.get_value() < colorBlack) && (rightOuterLine.get_value() > colorBlack)){
+        chassis.pid_turn_relative_set(5, TURN_SPEED, true); // turn left;
+      }
+      else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){
+        chassis.pid_drive_set(0.787402_in, DRIVE_SPEED, true);
+        //HELP: need to only for 1 cm and then resume the checking system
+      }
+      
+    }
+
+    */
+
+    /*else{
+    chassis.pid_targets_reset();
+    chassis.pid_drive_set(0, 0);
+    pros::delay(200);*/
+    
   }
 }
 
