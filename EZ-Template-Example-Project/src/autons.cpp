@@ -578,7 +578,7 @@ void linetracking(){
 
     //else if(midLine.get_value() < colorBlack){
 
-    else if(((leftLine.get_value() < colorBlack) && (rightLine.get_value() > colorBlack)) || ((leftOuterLine.get_value() > colorBlack) && (rightOuterLine.get_value() < colorBlack))){ //if left white right black
+    else if(((leftLine.get_value() < colorBlack) && (rightLine.get_value() > colorBlack)) || ((leftOuterLine.get_value() < colorBlack) && (rightOuterLine.get_value() > colorBlack))){ //if left white right black
       STP();
       pros::delay(50);
       chassis.pid_turn_relative_set(5, TURN_SPEED, true); //turn right
@@ -594,8 +594,8 @@ void linetracking(){
     }
 
     else if((leftLine.get_value() > colorBlack) && (rightLine.get_value() > colorBlack)){ //if both black
-      chassis.pid_drive_set(0.787402_in, DRIVE_SPEED, true);
-      chassis.pid_wait();
+      //chassis.pid_drive_set(0.787402_in, DRIVE_SPEED, true);
+      //chassis.pid_wait();
       if((leftOuterLine.get_value() > colorBlack) && (rightOuterLine.get_value() < colorBlack)){
         STP();
         pros::delay(50);
@@ -610,7 +610,7 @@ void linetracking(){
         chassis.pid_wait();
         pros::delay(50);
       }
-      else if(((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)) || (midLine.get_value() > colorBlack)){ //if both are white
+      else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){ //if both are white
         //chassis.pid_targets_reset();
         chassis.drive_set(DRIVE_SPEED, DRIVE_SPEED);
         pros::delay(50);
@@ -621,7 +621,7 @@ void linetracking(){
         pros::delay(50);
       }
     }
-    else if(((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)) || (midLine.get_value() > colorBlack)){ //if both are white
+    else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){ //if both are white
       //chassis.pid_targets_reset();
       chassis.drive_set(DRIVE_SPEED, DRIVE_SPEED);
       pros::delay(50);
