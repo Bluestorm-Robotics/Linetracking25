@@ -120,7 +120,7 @@ inline void rightNudge(){
 }
 
 inline bool checkObstacle(){ //Checks front ultrasonic sensor for obstacles
-	if(ultrasonic.get_distance() < detectionDistance) return true;
+	if(ultrasonic.get() < detectionDistance) return true;
 
 	else return false;
 }

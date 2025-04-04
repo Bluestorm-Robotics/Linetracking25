@@ -174,7 +174,7 @@ void ez_screen_task() {
             "\n RIRS: " + std::to_string(rightLine.get_value()) +
             "LCS: " + std::to_string(leftColor.get_hue()) + 
             "\n RCS: " + std::to_string(rightColor.get_hue()) + 
-            "\n RNG: " + std::to_string(ultrasonic.get_distance()) + 
+            "\n RNG: " + std::to_string(ultrasonic.get()) + 
             "\n CheckOB " + std::to_string(checkObstacle())
             // + "\n Current" + std::to_string(pros::battery::get_current())
         );
