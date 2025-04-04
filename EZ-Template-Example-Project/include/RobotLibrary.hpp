@@ -5,8 +5,8 @@
 
 inline const int norm_DRIVE_SPEED = 30; //Default driving speed
 inline const int norm_TURN_SPPEED = 110;
-inline const int upHill_DRIVE_SPEED = 127; //uphill driving speed
-inline const int upHill_TURN_SPEED = 127;
+inline const int upHill_DRIVE_SPEED = 100; //uphill driving speed
+inline const int upHill_TURN_SPEED = 110;
 inline const int downHill_DRIVE_SPEED = 15;
 inline const int SWING_SPEED = 40;
 
@@ -147,14 +147,14 @@ inline void tiltMonitor(){
 
 inline void resetSwitch(){
 	while(true){
-		if(resetBut.get_value() == false){
+		if(resetBut.get_value() == 0){
 			chassis.pid_targets_reset();                // Resets PID targets to 0
 			chassis.drive_imu_reset();                  // Reset gyro position to 0
 			chassis.drive_sensor_reset();
-			chassis.drive_set(0, 0); 
-			pros::delay(500);
+			STP();
+			pros::delay(1000);
 		}
-		pros::delay(50);
+		else pros::delay(50);
 	}
 }
 

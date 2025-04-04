@@ -29,6 +29,7 @@ ez::Drive chassis(
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
+
 void initialize() {
   // Print our branding over your terminal :D
   ez::ez_template_print();
@@ -57,12 +58,12 @@ void initialize() {
   // chassis.opcontrol_curve_buttons_right_set(pros::E_CONTROLLER_DIGITAL_Y, pros::E_CONTROLLER_DIGITAL_A);
 
   // Autonomous Selector using LLEMU
-  ez::as::auton_selector.autons_add({
+  /*ez::as::auton_selector.autons_add({
       {"linetracking\n\nRecompiled ROBOTC ev3 code for VEX", linetracking},
       {"IMUScaler", IMUscaler},
       {"left Swing test", leftSwing},
       {"right Swing test", rightSwing},
-  });
+  });*/
 
   // Initialize chassis and auton selector
   chassis.initialize();
@@ -71,7 +72,7 @@ void initialize() {
   leftColor.set_led_pwm(100);
   rightColor.set_led_pwm(100);
   pros::Task TiltMonitor(tiltMonitor);
-  //pros::Task Reset(resetSwitch);
+  pros::Task ResetSwitch(resetSwitch);
 }
 
 /**
@@ -127,7 +128,8 @@ void autonomous() {
   to be consistent
   */
 
-  ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
+  //ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
+  pros::Task Linetracking(linetracking);
 }
 
 /**
@@ -155,7 +157,7 @@ void ez_screen_task() {
       // Blank page for odom debugging
       if (chassis.odom_enabled() && !chassis.pid_tuner_enabled()) {
         // If we're on the first blank page...
-        if (ez::as::page_blank_is_on(0)) {
+        if (ez::as::page_blank_is_on(2)) {
           // Display X, Y, and Theta
           ez::screen_print("x: " + util::to_string_with_precision(chassis.odom_x_get()) +
                                "\ny: " + util::to_string_with_precision(chassis.odom_y_get()) +
@@ -168,18 +170,20 @@ void ez_screen_task() {
           screen_print_tracker(chassis.odom_tracker_back, "b", 6);
           screen_print_tracker(chassis.odom_tracker_front, "f", 7);
         }
-        if(ez::as::page_blank_is_on(1)){
+        if(ez::as::page_blank_is_on(0)){
           ez::screen_print(
             "LIRS: " + std::to_string(leftLine.get_value()) + 
-            "\n RIRS: " + std::to_string(rightLine.get_value()) +
-            "LCS: " + std::to_string(leftColor.get_hue()) + 
-            "\n RCS: " + std::to_string(rightColor.get_hue()) + 
-            "\n RNG: " + std::to_string(ultrasonic.get()) + 
-            "\n CheckOB " + std::to_string(checkObstacle())
+            "\nRIRS: " + std::to_string(rightLine.get_value()) +
+            "\nLOIRS: " + std::to_string(leftOuterLine.get_value()) +
+            "\nROIRS: " + std::to_string(rightOuterLine.get_value()) +
+            "\nLCS: " + std::to_string(leftColor.get_hue()) + 
+            "\nRCS: " + std::to_string(rightColor.get_hue()) + 
+            "\nRNG: " + std::to_string(ultrasonic.get()) + 
+            "\nCheckOB " + std::to_string(checkObstacle())
             // + "\n Current" + std::to_string(pros::battery::get_current())
         );
         }
-        if(ez::as::page_blank_is_on(2)){
+        if(ez::as::page_blank_is_on(1)){
           ez::screen_print(
           "IMU: " + std::to_string(chassis.imu.get_pitch()));
         }
@@ -255,7 +259,7 @@ void opcontrol() {
       //chassis.drive_brake_set(preference);
   while (true) {
     // Gives you some extras to make EZ-Template ezier
-    ez_template_extras();
+    //ez_template_extras();
 
     //chassis.opcontrol_tank();  // Tank control
     // chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
