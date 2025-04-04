@@ -59,6 +59,7 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
       {"linetracking\n\nRecompiled ROBOTC ev3 code for VEX", linetracking},
+      {"IMUScaler", IMUscaler},
       {"left Swing test", leftSwing},
       {"right Swing test", rightSwing},
   });
@@ -175,6 +176,7 @@ void ez_screen_task() {
             "\n RCS: " + std::to_string(rightColor.get_hue()) + 
             "\n RNG: " + std::to_string(ultrasonic.get()) + 
             "\n CheckOB " + std::to_string(checkObstacle())
+            // + "\n Current" + std::to_string(pros::battery::get_current())
         );
         }
         if(ez::as::page_blank_is_on(2)){
