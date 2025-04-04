@@ -104,23 +104,23 @@ inline void uTurn(){
 }
 
 inline void leftNudge(){
-    chassis.pid_drive_set(0, 0);
-	chassis.pid_drive_set(3.5_cm, DRIVE_SPEED, true);
+	STP();
+	pros::delay(50);
+	chassis.pid_turn_relative_set(-5, TURN_SPEED, true); // turn left
 	chassis.pid_wait();
-    chassis.pid_turn_relative_set(-5_deg, TURN_SPEED, true);
-    chassis.pid_wait();
+	pros::delay(50);
 }
 
 inline void rightNudge(){
-    chassis.pid_drive_set(0, 0);
-	chassis.pid_drive_set(3.5_cm, DRIVE_SPEED, true);
+	STP();
+	pros::delay(50);
+	chassis.pid_turn_relative_set(5, TURN_SPEED, true); //turn right
 	chassis.pid_wait();
-    chassis.pid_turn_relative_set(5_deg, TURN_SPEED, true);
-    chassis.pid_wait();
+	pros::delay(50);
 }
 
 inline bool checkObstacle(){ //Checks front ultrasonic sensor for obstacles
-	if(ultrasonic.get_distance() < detectionDistance) return true;
+	if(ultrasonic.get() < detectionDistance) return true;
 
 	else return false;
 }
