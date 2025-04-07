@@ -58,13 +58,13 @@ void initialize() {
   // chassis.opcontrol_curve_buttons_right_set(pros::E_CONTROLLER_DIGITAL_Y, pros::E_CONTROLLER_DIGITAL_A);
 
   // Autonomous Selector using LLEMU
-  /*ez::as::auton_selector.autons_add({
+  ez::as::auton_selector.autons_add({
       {"linetracking\n\nRecompiled ROBOTC ev3 code for VEX", linetracking},
       {"IMUScaler", IMUscaler},
       {"left Swing test", leftSwing},
       {"right Swing test", rightSwing},
-  });*/
-
+  });
+  
   // Initialize chassis and auton selector
   chassis.initialize();
   ez::as::initialize();
@@ -72,7 +72,7 @@ void initialize() {
   leftColor.set_led_pwm(100);
   rightColor.set_led_pwm(100);
   pros::Task TiltMonitor(tiltMonitor);
-  pros::Task ResetSwitch(resetSwitch);
+  //pros::Task ResetSwitch(resetSwitch);
 }
 
 /**
@@ -128,8 +128,8 @@ void autonomous() {
   to be consistent
   */
 
-  //ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
-  pros::Task Linetracking(linetracking);
+  ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
+  //pros::Task Linetracking(linetracking);
 }
 
 /**

@@ -88,7 +88,7 @@ inline void leftPointTurn(){
 }
 
 inline void rightPointTurn(){
-    chassis.pid_drive_set(4_cm, DRIVE_SPEED, true);
+    chassis.pid_drive_set(4_cm, TURN_SPEED, true);
     chassis.pid_wait();
     chassis.pid_turn_relative_set(90_deg, TURN_SPEED, true);
     chassis.pid_wait();
