@@ -64,7 +64,7 @@ void initialize() {
       {"left Swing test", leftSwing},
       {"right Swing test", rightSwing},
   });
-  
+
   // Initialize chassis and auton selector
   chassis.initialize();
   ez::as::initialize();
@@ -185,7 +185,7 @@ void ez_screen_task() {
         }
         if(ez::as::page_blank_is_on(1)){
           ez::screen_print(
-          "IMU: " + std::to_string(chassis.imu.get_pitch()));
+          "SERVO: " + std::to_string(abs(servo.get_value())));
         }
       }
     }
@@ -258,6 +258,7 @@ void opcontrol() {
   autonomous();
       //chassis.drive_brake_set(preference);
   while (true) {
+
     // Gives you some extras to make EZ-Template ezier
     //ez_template_extras();
 

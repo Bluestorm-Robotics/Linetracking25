@@ -27,6 +27,8 @@ inline pros::Distance ultrasonic(18);
 //Other
 inline pros::adi::DigitalIn resetBut('F');
 
+inline pros::adi::Motor servo('G');
+
 
 //Examples:
 // inline pros::Motor intake(1);
