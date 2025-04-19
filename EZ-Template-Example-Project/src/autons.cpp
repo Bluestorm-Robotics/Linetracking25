@@ -576,30 +576,34 @@ void linetracking(){
       }
     }
 
-    else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() > colorBlack)){ //if left white right black
-      rightNudge();
-    }
-    else if((leftLine.get_value() > colorBlack) && (rightLine.get_value() < colorBlack)){ //if left black if right white
-      leftNudge();
-    }
-
-    else if((leftOuterLine.get_value() > colorBlack) && (rightOuterLine.get_value() < colorBlack)){
-      leftNudge();
-    }
-    else if((leftOuterLine.get_value() < colorBlack) && (rightOuterLine.get_value() > colorBlack)){
-      rightNudge();
-    }
-
-    else if(((leftLine.get_value() > colorBlack) && (rightLine.get_value() > colorBlack)) && ((leftOuterLine.get_value() < colorBlack) && (rightOuterLine.get_value() < colorBlack))){ //if both black
-      chassis.pid_drive_set(0.787402_in, DRIVE_SPEED, true);
-      chassis.pid_wait();
-    }
-
-
-    else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){ //if both are white
-      //chassis.pid_targets_reset();
-      chassis.drive_set(DRIVE_SPEED, DRIVE_SPEED);
+    else if((leftLine.get_value() > colorBlack) || (rightLine.get_value() > colorBlack)){
+      STP();
       pros::delay(50);
+      if((leftLine.get_value() < colorBlack) && (rightLine.get_value() > colorBlack)){ //if left white right black
+        rightNudge();
+      }
+      else if((leftLine.get_value() > colorBlack) && (rightLine.get_value() < colorBlack)){ //if left black if right white
+        leftNudge();
+      }
+
+      else if((leftOuterLine.get_value() > colorBlack) && (rightOuterLine.get_value() < colorBlack)){
+        leftNudge();
+      }
+      else if((leftOuterLine.get_value() < colorBlack) && (rightOuterLine.get_value() > colorBlack)){
+        rightNudge();
+      }
+
+      else if(((leftLine.get_value() > colorBlack) && (rightLine.get_value() > colorBlack)) && ((leftOuterLine.get_value() < colorBlack) && (rightOuterLine.get_value() < colorBlack))){ //if both black
+        chassis.pid_drive_set(0.787402_in, DRIVE_SPEED, true);
+        chassis.pid_wait();
+      }
+
+
+      else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){ //if both are white
+        //chassis.pid_targets_reset();
+        chassis.drive_set(DRIVE_SPEED, DRIVE_SPEED);
+        pros::delay(50);
+      }
     }
     /*outer sensor logic
 
