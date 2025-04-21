@@ -3,7 +3,7 @@
 #include "EZ-Template/api.hpp"
 #include "api.h"
 
-inline const int norm_DRIVE_SPEED = 30; //Default driving speed
+inline const int norm_DRIVE_SPEED = 10; //Default driving speed
 inline const int norm_TURN_SPPEED = 110;
 inline const int upHill_DRIVE_SPEED = 100; //uphill driving speed
 inline const int upHill_TURN_SPEED = 110;
@@ -83,7 +83,7 @@ inline void leftPointTurn(){
     chassis.pid_wait();
     chassis.pid_turn_relative_set(-90_deg, TURN_SPEED, true);
     chassis.pid_wait();
-    chassis.pid_drive_set(10_cm, DRIVE_SPEED, true);
+    chassis.pid_drive_set(6_cm, DRIVE_SPEED, true);
     chassis.pid_wait();
 }
 
@@ -92,7 +92,7 @@ inline void rightPointTurn(){
     chassis.pid_wait();
     chassis.pid_turn_relative_set(90_deg, TURN_SPEED, true);
     chassis.pid_wait();
-    chassis.pid_drive_set(10_cm, DRIVE_SPEED, true);
+    chassis.pid_drive_set(6_cm, DRIVE_SPEED, true);
     chassis.pid_wait();
 }
 

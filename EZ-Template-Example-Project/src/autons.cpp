@@ -593,17 +593,16 @@ void linetracking(){
         rightNudge();
       }
 
-      else if(((leftLine.get_value() > colorBlack) && (rightLine.get_value() > colorBlack)) && ((leftOuterLine.get_value() < colorBlack) && (rightOuterLine.get_value() < colorBlack))){ //if both black
+      else if(((leftLine.get_value() > colorBlack) && (rightLine.get_value() > colorBlack))){ //if both black
         chassis.pid_drive_set(0.787402_in, DRIVE_SPEED, true);
         chassis.pid_wait();
       }
 
-
-      else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){ //if both are white
-        //chassis.pid_targets_reset();
-        chassis.drive_set(DRIVE_SPEED, DRIVE_SPEED);
-        pros::delay(50);
-      }
+    }
+    else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){ //if both are white
+      //chassis.pid_targets_reset();
+      chassis.drive_set(DRIVE_SPEED, DRIVE_SPEED);
+      pros::delay(50);
     }
     /*outer sensor logic
 
@@ -628,7 +627,7 @@ void linetracking(){
     chassis.pid_targets_reset();
     chassis.pid_drive_set(0, 0);
     pros::delay(200);*/
-    
+    pros::delay(50);
   }
 }
 
