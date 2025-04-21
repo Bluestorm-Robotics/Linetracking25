@@ -13,7 +13,7 @@ ez::Drive chassis(
 
     11,      // IMU Port
     4,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
-    100);   // Wheel RPM = cartridge * (motor gear / wheel gear)
+    300);   // Wheel RPM = cartridge * (motor gear / wheel gear)
 
 // Uncomment the trackers you're using here!
 // - `8` and `9` are smart ports (making these negative will reverse the sensor)
@@ -184,8 +184,8 @@ void ez_screen_task() {
         );
         }
         if(ez::as::page_blank_is_on(1)){
-          ez::screen_print(
-          "SERVO: " + std::to_string(abs(servo.get_value())));
+          //ez::screen_print(
+          //"SERVO: " + std::to_string(abs(servo.get_value())));
         }
       }
     }
@@ -255,7 +255,8 @@ void ez_template_extras() {
 void opcontrol() {
   // This is preference to what you like to drive on
   //chassis.drive_brake_set(MOTOR_BRAKE_COAST);
-  autonomous();
+  //autonomous();
+  pros::Task LineTracking(linetracking);
       //chassis.drive_brake_set(preference);
   while (true) {
 

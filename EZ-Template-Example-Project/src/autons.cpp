@@ -555,19 +555,19 @@ void linetracking(){
       STP();
     }*/
 
-    if(leftColor.get_hue() == colorGreen || rightColor.get_hue() == colorGreen){
+    if((leftColor.get_hue() == colorGreen) || (rightColor.get_hue() == colorGreen)){
       STP();
       pros::delay(50);
-      if(leftColor.get_hue() == colorGreen && leftColor.get_hue() == colorGreen){
+      if((leftColor.get_hue() == colorGreen) && (leftColor.get_hue() == colorGreen)){
         uTurn();
         //printf("Uturn\n");
       }
-      else if(leftColor.get_hue() == colorGreen && rightColor.get_hue() != colorGreen){
+      else if((leftColor.get_hue() == colorGreen) && (rightColor.get_hue() != colorGreen)){
         //turn left
         printf("Left turn!!!\n");
         leftPointTurn();
       }
-      else if((leftColor.get_hue() != colorGreen && rightColor.get_hue() == colorGreen)){
+      else if((leftColor.get_hue() != colorGreen) && (rightColor.get_hue() == colorGreen)){
         printf("right turn!!!\n");
         rightPointTurn();
       }
