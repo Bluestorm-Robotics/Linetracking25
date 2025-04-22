@@ -257,9 +257,8 @@ void opcontrol() {
   //chassis.drive_brake_set(MOTOR_BRAKE_COAST);
   //autonomous();
   pros::Task LineTracking(linetracking);
-      //chassis.drive_brake_set(preference);
+    //chassis.drive_brake_set(preference);
   while (true) {
-
     // Gives you some extras to make EZ-Template ezier
     //ez_template_extras();
 

@@ -550,6 +550,12 @@ void measure_offsets() {
     }
 }*/
 void linetracking(){
+  chassis.pid_targets_reset();                // Resets PID targets to 0
+  chassis.drive_imu_reset();                  // Reset gyro position to 0
+  chassis.drive_sensor_reset();               // Reset drive sensors to 0
+  chassis.odom_xyt_set(0_in, 0_in, 0_deg);    // Set the current position, you can start at a specific position with this
+  chassis.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
+  pros::delay(100);
   while(true){
     /*if(checkObstacle){
       STP();
@@ -557,7 +563,6 @@ void linetracking(){
 
     if((leftColor.get_hue() == colorGreen) || (rightColor.get_hue() == colorGreen)){
       STP();
-      pros::delay(50);
       if((leftColor.get_hue() == colorGreen) && (leftColor.get_hue() == colorGreen)){
         uTurn();
         //printf("Uturn\n");
@@ -578,7 +583,6 @@ void linetracking(){
 
     else if((leftLine.get_value() > colorBlack) || (rightLine.get_value() > colorBlack)){
       STP();
-      pros::delay(50);
       if((leftLine.get_value() < colorBlack) && (rightLine.get_value() > colorBlack)){ //if left white right black
         rightNudge();
       }
@@ -586,23 +590,25 @@ void linetracking(){
         leftNudge();
       }
 
-      else if((leftOuterLine.get_value() > colorBlack) && (rightOuterLine.get_value() < colorBlack)){
+      else if(((leftLine.get_value() > colorBlack) && (rightLine.get_value() > colorBlack))){ //if both black
+        chassis.pid_drive_set(1_cm, DRIVE_SPEED, true);
+        chassis.pid_wait();
+      }
+
+    }
+    else if((leftOuterLine.get_value() > colorBlack) || (rightOuterLine.get_value() > colorBlack)){
+      STP();
+      if((leftOuterLine.get_value() > colorBlack) && (rightOuterLine.get_value() < colorBlack)){
         leftNudge();
       }
       else if((leftOuterLine.get_value() < colorBlack) && (rightOuterLine.get_value() > colorBlack)){
         rightNudge();
       }
-
-      else if(((leftLine.get_value() > colorBlack) && (rightLine.get_value() > colorBlack))){ //if both black
-        chassis.pid_drive_set(0.787402_in, DRIVE_SPEED, true);
-        chassis.pid_wait();
-      }
-
     }
     else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){ //if both are white
       //chassis.pid_targets_reset();
       chassis.drive_set(DRIVE_SPEED, DRIVE_SPEED);
-      pros::delay(50);
+      pros::delay(2);
     }
     /*outer sensor logic
 
@@ -627,7 +633,6 @@ void linetracking(){
     chassis.pid_targets_reset();
     chassis.pid_drive_set(0, 0);
     pros::delay(200);*/
-    pros::delay(50);
   }
 }
 

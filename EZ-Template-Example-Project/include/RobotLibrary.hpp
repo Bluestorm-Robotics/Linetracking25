@@ -3,7 +3,7 @@
 #include "EZ-Template/api.hpp"
 #include "api.h"
 
-inline const int norm_DRIVE_SPEED = 10; //Default driving speed
+inline const int norm_DRIVE_SPEED = 17; //Default driving speed
 inline const int norm_TURN_SPPEED = 110;
 inline const int upHill_DRIVE_SPEED = 100; //uphill driving speed
 inline const int upHill_TURN_SPEED = 110;
@@ -76,14 +76,15 @@ void moveCM(float y){ //move given distance in CM
 
 inline void STP(){ //stop
 	chassis.pid_drive_set(0, 0);
+	pros::delay(50);
 }
 
 inline void leftPointTurn(){
-    chassis.pid_drive_set(4_cm, DRIVE_SPEED, true);
+    chassis.pid_drive_set(4_cm, TURN_SPEED, true);
     chassis.pid_wait();
     chassis.pid_turn_relative_set(-90_deg, TURN_SPEED, true);
     chassis.pid_wait();
-    chassis.pid_drive_set(6_cm, DRIVE_SPEED, true);
+    chassis.pid_drive_set(10_cm, TURN_SPEED, true);
     chassis.pid_wait();
 }
 
@@ -92,7 +93,7 @@ inline void rightPointTurn(){
     chassis.pid_wait();
     chassis.pid_turn_relative_set(90_deg, TURN_SPEED, true);
     chassis.pid_wait();
-    chassis.pid_drive_set(6_cm, DRIVE_SPEED, true);
+    chassis.pid_drive_set(10_cm, TURN_SPEED, true);
     chassis.pid_wait();
 }
 
@@ -105,18 +106,16 @@ inline void uTurn(){
 
 inline void leftNudge(){
 	STP();
-	pros::delay(50);
 	chassis.pid_turn_relative_set(-5, TURN_SPEED, true); // turn left
 	chassis.pid_wait();
-	pros::delay(50);
+	pros::delay(2);
 }
 
 inline void rightNudge(){
 	STP();
-	pros::delay(50);
 	chassis.pid_turn_relative_set(5, TURN_SPEED, true); //turn right
 	chassis.pid_wait();
-	pros::delay(50);
+	pros::delay(2);
 }
 
 inline bool checkObstacle(){ //Checks front ultrasonic sensor for obstacles
