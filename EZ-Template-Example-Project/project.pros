@@ -424,9 +424,9 @@
       }
     },
     "upload_options": {
-      "description": "Robocup linetracking",
+      "description": "Robocup linetracking TEAM ECLIPSE",
       "slot": 1,
-      "icon": "clawbot",
+      "icon": "planet",
       "after": "screen"
     },
     "use_early_access": false

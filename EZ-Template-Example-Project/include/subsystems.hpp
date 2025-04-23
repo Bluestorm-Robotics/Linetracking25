@@ -23,6 +23,7 @@ inline pros::Optical rightColor(20);
 
 //Ultrasonic sensors //Centered in the front of the robot
 inline pros::Distance ultrasonic(18);
+inline pros::Distance sideUltrasonic(17);
 
 //Other
 inline pros::adi::DigitalIn resetBut('F');

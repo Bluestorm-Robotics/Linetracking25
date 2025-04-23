@@ -29,6 +29,8 @@ void default_constants() {
   chassis.pid_swing_chain_constant_set(5_deg);
   chassis.pid_drive_chain_constant_set(3_in);
 
+  chassis.drive_imu_scaler_set(1.015);
+
   // Slew constants
   chassis.slew_turn_constants_set(3_deg, 70);
   chassis.slew_drive_constants_set(3_in, 70);
@@ -557,10 +559,7 @@ void linetracking(){
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
   pros::delay(100);
   while(true){
-    /*if(checkObstacle){
-      STP();
-    }*/
-
+    checkObstacle();
     if((leftColor.get_hue() == colorGreen) || (rightColor.get_hue() == colorGreen)){
       STP();
       if((leftColor.get_hue() == colorGreen) && (leftColor.get_hue() == colorGreen)){
@@ -607,8 +606,7 @@ void linetracking(){
     }
     else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){ //if both are white
       //chassis.pid_targets_reset();
-      chassis.drive_set(DRIVE_SPEED, DRIVE_SPEED);
-      pros::delay(2);
+      forwards();
     }
     /*outer sensor logic
 

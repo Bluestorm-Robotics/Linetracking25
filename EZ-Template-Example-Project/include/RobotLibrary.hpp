@@ -13,7 +13,7 @@ inline const int SWING_SPEED = 40;
 inline int DRIVE_SPEED = 30; //Editable variable
 inline int TURN_SPEED = 110; //not really used
 
-inline const int detectionDistance  = 150; //Obstacle detection distance for ultrasonic sensor
+inline const int detectionDistance  = 180; //Obstacle detection distance for ultrasonic sensor
 inline const int tiltFlag = 10; //10 degress downhill
 //inline const int lineWidthCM = 2_cm;
 
@@ -118,10 +118,48 @@ inline void rightNudge(){
 	pros::delay(2);
 }
 
-inline bool checkObstacle(){ //Checks front ultrasonic sensor for obstacles
-	if(ultrasonic.get() < detectionDistance) return true;
+inline void forwards(){
+	chassis.drive_set(DRIVE_SPEED, DRIVE_SPEED);
+	pros::delay(2);
+}
 
-	else return false;
+inline void forwards(int x){
+	chassis.drive_set(x, x);
+	pros::delay(2);
+}
+
+inline void checkObstacle(){ //Checks front ultrasonic sensor for obstacles
+	bool wall = false;
+	if(ultrasonic.get() < detectionDistance){
+		wall = true;
+		while(wall == true){
+			STP();
+			chassis.pid_turn_relative_set(-90_deg, TURN_SPEED-50, true);
+			chassis.pid_wait();
+			while(sideUltrasonic.get() < detectionDistance){ //Keep moving forward until Obstalce is cleared
+				forwards();
+			}
+			for(int i = 3; i > 0; i--){ //repeat 3 time
+				chassis.pid_drive_set(18_cm, DRIVE_SPEED, true); //Clear the robot of the obstacle
+				chassis.pid_wait();
+				chassis.pid_turn_relative_set(90_deg, TURN_SPEED-50, true); //Now on 2nd side of obstacle
+				chassis.pid_wait();
+				while(sideUltrasonic.get() > detectionDistance){
+					forwards();
+				}
+				while(sideUltrasonic.get() < detectionDistance){ //Keep moving forward until Obstalce is cleared
+					forwards();
+					if((leftLine.get_value() > colorBlack) || (rightLine.get_value() > colorBlack)){
+						STP();
+						wall = false;
+						break;
+					}
+				}
+			}
+			STP(); //No solution found. give up
+		}
+	}
+	else pros::delay(2);
 }
 
 inline void tiltMonitor(){
@@ -140,7 +178,7 @@ inline void tiltMonitor(){
 			TURN_SPEED = norm_TURN_SPPEED;
 		}
 
-		pros::delay(50);
+		pros::delay(2);
 	}
 }
 
@@ -153,7 +191,7 @@ inline void resetSwitch(){
 			STP();
 			pros::delay(1000);
 		}
-		else pros::delay(50);
+		else pros::delay(2);
 	}
 }
 

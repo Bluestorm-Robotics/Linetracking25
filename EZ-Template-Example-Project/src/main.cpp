@@ -58,12 +58,12 @@ void initialize() {
   // chassis.opcontrol_curve_buttons_right_set(pros::E_CONTROLLER_DIGITAL_Y, pros::E_CONTROLLER_DIGITAL_A);
 
   // Autonomous Selector using LLEMU
-  ez::as::auton_selector.autons_add({
-      {"linetracking\n\nRecompiled ROBOTC ev3 code for VEX", linetracking},
+  /*ez::as::auton_selector.autons_add({
       {"IMUScaler", IMUscaler},
+      {"linetracking\n\nRecompiled ROBOTC ev3 code for VEX", linetracking},
       {"left Swing test", leftSwing},
       {"right Swing test", rightSwing},
-  });
+  });*/
 
   // Initialize chassis and auton selector
   chassis.initialize();
@@ -178,8 +178,8 @@ void ez_screen_task() {
             "\nROIRS: " + std::to_string(rightOuterLine.get_value()) +
             "\nLCS: " + std::to_string(leftColor.get_hue()) + 
             "\nRCS: " + std::to_string(rightColor.get_hue()) + 
-            "\nRNG: " + std::to_string(ultrasonic.get()) + 
-            "\nCheckOB " + std::to_string(checkObstacle())
+            "\nRNG: " + std::to_string(ultrasonic.get()) /*+ 
+            "\nCheckOB " + std::to_string(checkObstacle())*/
             // + "\n Current" + std::to_string(pros::battery::get_current())
         );
         }
