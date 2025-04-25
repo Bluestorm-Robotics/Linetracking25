@@ -3,7 +3,7 @@
 #include "EZ-Template/api.hpp"
 #include "api.h"
 
-inline const int norm_DRIVE_SPEED = 17; //Default driving speed
+inline const int norm_DRIVE_SPEED = 20; //Default driving speed
 inline const int norm_TURN_SPPEED = 110;
 inline const int upHill_DRIVE_SPEED = 100; //uphill driving speed
 inline const int upHill_TURN_SPEED = 110;
