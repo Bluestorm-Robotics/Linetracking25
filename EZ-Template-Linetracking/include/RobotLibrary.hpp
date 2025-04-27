@@ -3,7 +3,7 @@
 #include "EZ-Template/api.hpp"
 #include "api.h"
 
-inline const int norm_DRIVE_SPEED = 20; //Default driving speed
+inline const int norm_DRIVE_SPEED = 17; //Default driving speed
 inline const int norm_TURN_SPPEED = 110;
 inline const int upHill_DRIVE_SPEED = 100; //uphill driving speed
 inline const int upHill_TURN_SPEED = 110;
@@ -160,6 +160,27 @@ inline void checkObstacle(){ //Checks front ultrasonic sensor for obstacles
 		}
 	}
 	else pros::delay(2);
+}
+inline void technicalChallenge(int x){
+	int reflectTape = x;
+	STP();
+	chassis.pid_drive_set(15_cm, DRIVE_SPEED, true); //move to middle of the tile
+	chassis.pid_wait();
+	for(int i = 4; i > 0; i--){
+		chassis.pid_drive_set(15_cm, DRIVE_SPEED, true);
+		chassis.pid_wait();
+		pros::delay(50);
+		if((leftLine.get_value() > reflectTape) && (rightLine.get_value() > reflectTape)){
+			chassis.pid_drive_set(5_cm, TURN_SPEED-50, true); //move to middle of the tile
+			chassis.pid_wait();
+			break;
+		}
+		else{
+			chassis.pid_drive_set(-15_cm, DRIVE_SPEED, true);
+			chassis.pid_wait();
+			chassis.pid_turn_relative_set(90_deg, TURN_SPEED-50, true);
+		}
+	}
 }
 
 inline void tiltMonitor(){

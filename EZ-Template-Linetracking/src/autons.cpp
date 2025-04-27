@@ -51,7 +51,7 @@ void default_constants() {
 void modified_constants() {
   // P, I, D, and Start I
   chassis.pid_drive_constants_set(22.5, 0.0, 150.0);         // Fwd/rev constants, used for odom and non odom motions
-  chassis.pid_heading_constants_set(11.0, 0.0, 20.0);        // Holds the robot straight while going forward without odom
+  chassis.pid_heading_constants_set(11.5, 0.0, 35.0);        // Holds the robot straight while going forward without odom
   chassis.pid_turn_constants_set(3.0, 0.05, 20.0, 15.0);     // Turn in place constants
   chassis.pid_swing_constants_set(6.0, 0.0, 65.0);           // Swing constants
   chassis.pid_odom_angular_constants_set(6.5, 0.0, 52.5);    // Angular control for odom motions
@@ -597,7 +597,7 @@ void linetracking(){
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
   pros::delay(100);
   while(true){
-    checkObstacle();
+    //checkObstacle();
     if((leftColor.get_hue() == colorGreen) || (rightColor.get_hue() == colorGreen)){
       STP();
       if((leftColor.get_hue() == colorGreen) && (leftColor.get_hue() == colorGreen)){
@@ -628,7 +628,7 @@ void linetracking(){
       }
 
       else if(((leftLine.get_value() > colorBlack) && (rightLine.get_value() > colorBlack))){ //if both black
-        chassis.pid_drive_set(2_cm, DRIVE_SPEED, true);
+        chassis.pid_drive_set(1_cm, DRIVE_SPEED, true);
         chassis.pid_wait();
       }
 
@@ -644,7 +644,11 @@ void linetracking(){
     }
     else if((leftLine.get_value() < colorBlack) && (rightLine.get_value() < colorBlack)){ //if both are white
       //chassis.pid_targets_reset();
-      forwards();
+      if(midLine.get_value() < colorBlack){
+        technicalChallenge(1100); //Set the relfective tape value
+        //move forward to middle of tile
+      }
+      else forwards();
     }
     /*outer sensor logic
 

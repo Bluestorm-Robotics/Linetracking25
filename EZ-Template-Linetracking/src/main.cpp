@@ -8,10 +8,10 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-14},     // Left Chassis Ports (negative port will reverse it!)
-    {15},  // Right Chassis Ports (negative port will reverse it!)
+    {-10},     // Left Chassis Ports (negative port will reverse it!)
+    {13},  // Right Chassis Ports (negative port will reverse it!)
 
-    11,      // IMU Port
+    1,      // IMU Port
     4,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     200);   // Wheel RPM = cartridge * (motor gear / wheel gear)
 
@@ -185,8 +185,8 @@ void ez_screen_task() {
         );
         }
         if(ez::as::page_blank_is_on(1)){
-          //ez::screen_print(
-          //"SERVO: " + std::to_string(abs(servo.get_value())));
+          ez::screen_print(
+          "BRT: " + std::to_string(leftColor.get_brightness()));
         }
       }
     }

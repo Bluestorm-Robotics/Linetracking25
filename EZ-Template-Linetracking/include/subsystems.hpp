@@ -19,7 +19,7 @@ inline pros::adi::AnalogIn rightOuterLine('E');
 
 //Color sensors  (58mm spacing)
 inline pros::Optical leftColor(19);
-inline pros::Optical rightColor(20);
+inline pros::Optical rightColor(21);
 
 //Ultrasonic sensors //Centered in the front of the robot
 inline pros::Distance ultrasonic(18);
